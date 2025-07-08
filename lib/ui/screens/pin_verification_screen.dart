@@ -17,7 +17,7 @@ class PinVerificationScreen extends StatefulWidget {
 }
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
-  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -51,7 +51,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
-                    controller: _emailTEController,
+                    controller: _otpTEController,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(hintText: 'Email'),
                     validator: (String? value) {
@@ -65,7 +65,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _onTapSubmitButton,
-                    child: Icon(Icons.arrow_circle_right_outlined),
+                    child: Text('Veryfy'),
                   ),
                   const SizedBox(height: 32),
                   Center(
@@ -114,7 +114,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
 
   @override
   void dispose() {
-    _emailTEController.dispose();
+    _otpTEController.dispose();
     super.dispose();
   }
 }
