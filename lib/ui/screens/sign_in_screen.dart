@@ -1,12 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/screens/forgot_password_email_screen.dart';
+import 'package:ostad_task_manager/ui/screens/sign_up_screen.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
-import '../utils/asset_paths.dart';
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
-
+  static const String name ='/sign-in';
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
@@ -64,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed:_onTapSignInButton, child: Icon(Icons.arrow_circle_right_rounded),
                   ),
                 const SizedBox(height: 30,),
-                TextButton(onPressed: _onTapForgotButton, child: Text('Forgot Password?', style: TextStyle(
+                TextButton(onPressed: _onTapForgotPasswordButton, child: Text('Forgot Password?', style: TextStyle(
                   color: Colors.grey
                 ),)),
                 RichText(text: TextSpan(
@@ -92,14 +94,19 @@ class _SignInScreenState extends State<SignInScreen> {
       )
     );
   }
-  void _onTapSignUpButton(){
 
-  }
   void _onTapSignInButton(){
+    if(_formKey.currentState!.validate()){
+      
+    }
+  }
+
+  void _onTapForgotPasswordButton(){
+    Navigator.pushNamed(context, ForgotPasswordEmailScreen.name);
 
   }
-  void _onTapForgotButton(){
-
+  void _onTapSignUpButton(){
+    Navigator.pushNamed(context, SignUpScreen.name);
   }
 
   @override

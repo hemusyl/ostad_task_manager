@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/screens/forgot_password_email_screen.dart';
+import 'package:ostad_task_manager/ui/screens/pin_verification_screen.dart';
+import 'package:ostad_task_manager/ui/screens/sign_in_screen.dart';
+import 'package:ostad_task_manager/ui/screens/sign_up_screen.dart';
 import 'package:ostad_task_manager/ui/screens/splash_screen.dart';
 
 class TaskManagerApp extends StatefulWidget {
@@ -59,8 +63,15 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
       ),
 
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      initialRoute: '/',
+      routes: {
+        SplashScreen.name: (context) => SplashScreen(),
+        SignInScreen.name : (context) => SignInScreen(),
+        SignUpScreen.name : (context) => SignUpScreen(),
+        ForgotPasswordEmailScreen.name : (context) => ForgotPasswordEmailScreen(),
+        PinVerificationScreen.name : (context) => PinVerificationScreen(),
 
+      },
     );
   }
 }
