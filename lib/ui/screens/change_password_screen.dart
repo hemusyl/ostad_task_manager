@@ -1,24 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ostad_task_manager/ui/screens/change_password_screen.dart';
 import 'package:ostad_task_manager/ui/screens/sign_in_screen.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../widgets/screen_background.dart';
 
 
-class PinVerificationScreen extends StatefulWidget {
-  const PinVerificationScreen({super.key});
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
-  static const String name = '/pin-verification';
+  static const String name = '/change-password';
 
   @override
-  State<PinVerificationScreen> createState() =>
-      _PinVerificationScreenState();
+  State<ChangePasswordScreen> createState() =>
+      _ChangePasswordScreenState();
 }
 
-class _PinVerificationScreenState extends State<PinVerificationScreen> {
-  final TextEditingController _otpTEController = TextEditingController();
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final TextEditingController _passwordTEController = TextEditingController();
+  final TextEditingController _confirmpasswordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,12 +35,12 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 children: [
                   const SizedBox(height: 80),
                   Text(
-                    'Pin Verificatiion',
+                    'Set Password',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'A 6 digits OTP has been sent to your email address',
+                    'Password should be more than 6',
                     style: Theme
                         .of(context)
                         .textTheme
@@ -51,24 +50,31 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  PinCodeTextField(
-                    length: 4,
-                    obscureText: false,
-                    animationType: AnimationType.fade,
-                    keyboardType: TextInputType.number,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      activeFillColor: Colors.white,
-                    ),
-                    animationDuration: Duration(milliseconds: 300),
-                    backgroundColor: Colors.transparent,
-                    controller: _otpTEController,
-
-                  appContext: context,
-                  ),
+                 TextFormField(
+                   controller: _passwordTEController,
+                   decoration: InputDecoration(
+                     hintText: 'Password',
+                   ),
+                   validator:(String? value){
+                     if((value?.length ?? 0) <= 6){
+                       return 'Enter a valid Password';
+                     }
+                     return null;
+                   },
+                 ),
+                  const SizedBox(height: 15),
+                 TextFormField(
+                   controller: _confirmpasswordTEController,
+                   decoration: InputDecoration(
+                     hintText: 'Confirm Password',
+                   ),
+                   validator:(String? value){
+                     if((value ?? '') != _passwordTEController.text){
+                       return "Confirm Password doesn't match";
+                     }
+                     return null;
+                   },
+                 ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _onTapSubmitButton,
@@ -112,7 +118,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     // if (_formKey.currentState!.validate()) {
     //   // TODO: Sign in with API
     // }
-    Navigator.pushNamed(context, ChangePasswordScreen.name);
+    //Navigator.pushNamed(context, PinVerificationScreen.name);
   }
 
   void _onTapSignInButton() {
@@ -121,7 +127,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
 
   @override
   void dispose() {
-    _otpTEController.dispose();
+    _passwordTEController.dispose();
+    _confirmpasswordTEController.dispose();
     super.dispose();
   }
 }
