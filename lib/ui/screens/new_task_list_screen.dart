@@ -30,17 +30,23 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
                   separatorBuilder:(context, index) => const SizedBox(width: 4,),
             ),
             ),
-            Expanded(child: ListView.builder(
+            Expanded(
+                child: ListView.builder(
               itemCount: 9,
               itemBuilder: (context, index){
                 return TaskCard();
               },
-            )),
+            ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){},
+      floatingActionButton: FloatingActionButton(
+        onPressed: _onTapAddNewTaskButton,
         child:Icon(Icons.add) ,),
     );
   }
+}
+void _onTapAddNewTaskButton(){
+  // Navigator.pushNamed(context, AddNewTaskScreen.name);
 }
