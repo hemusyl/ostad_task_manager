@@ -14,7 +14,8 @@ class MainNavBarHolderScreen extends StatefulWidget {
 
 class _MainNavBarHolderScreenState extends State<MainNavBarHolderScreen> {
   List<Widget> _screens =[
-    NewTaskListScreen(), ProgressTaskListScreen()
+    NewTaskListScreen(),
+    ProgressTaskListScreen(),
   ];
   int _selectedIndex = 0;
 
