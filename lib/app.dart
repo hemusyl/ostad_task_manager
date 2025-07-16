@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/screens/add_new_task_screen.dart';
 import 'package:ostad_task_manager/ui/screens/change_password_screen.dart';
 import 'package:ostad_task_manager/ui/screens/forgot_password_email_screen.dart';
 import 'package:ostad_task_manager/ui/screens/main_nav_bar_holder_screen.dart';
@@ -74,6 +75,7 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
         PinVerificationScreen.name : (context) => PinVerificationScreen(),
         ChangePasswordScreen.name : (context) => ChangePasswordScreen(),
         MainNavBarHolderScreen.name : (context) => MainNavBarHolderScreen(),
+        AddNewTaskScreen.name : (context) => AddNewTaskScreen(),
 
       },
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:ostad_task_manager/ui/screens/add_new_task_screen.dart';
 import '../widgets/task_count_summary_card.dart';
 import '../widgets/taskcard.dart';
 
@@ -48,7 +48,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
         child:Icon(Icons.add) ,),
     );
   }
-}
-void _onTapAddNewTaskButton(){
-  // Navigator.pushNamed(context, AddNewTaskScreen.name);
+  void _onTapAddNewTaskButton(){
+    Navigator.pushNamed(context, AddNewTaskScreen.name);
+  }
 }
