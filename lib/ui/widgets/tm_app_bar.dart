@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/screens/update_profile_screen.dart';
 
 import '../screens/sign_in_screen.dart';
 
@@ -59,7 +60,7 @@ class _TMAppBarState extends State<TMAppBar> {
   }
 
   void _onTapProfileBar() {
-
+    Navigator.pushNamed(context, UpdateProfileScreen.name);
   }
 }
 
