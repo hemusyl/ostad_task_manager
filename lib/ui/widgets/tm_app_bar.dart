@@ -60,7 +60,10 @@ class _TMAppBarState extends State<TMAppBar> {
   }
 
   void _onTapProfileBar() {
-    Navigator.pushNamed(context, UpdateProfileScreen.name);
+    if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name){
+      Navigator.pushNamed(context, UpdateProfileScreen.name);
+    }
+
   }
 }
 

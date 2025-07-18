@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
 import 'package:ostad_task_manager/ui/widgets/tm_app_bar.dart';
 
@@ -19,6 +22,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _phoneNumberTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 40,),
-                    Text('Update  profile', style: Theme.of(context).textTheme.titleLarge,),
+                    Text('Update  profile', style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleLarge,),
+                    const SizedBox(height: 40,),
+                    _buildPhotoPicker(),
                     TextFormField(
                       controller: _firstNameTEController,
                       textInputAction: TextInputAction.next,
@@ -116,6 +126,51 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           ),
         )
     );
+  }
+
+  Widget _buildPhotoPicker() {
+    return GestureDetector(
+      onTap: _onTapPhotoPicker,
+      child: Container(
+        height: 50,
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 100,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8)
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Text('Photo', style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              )),
+            ),
+            const SizedBox(width: 5,),
+            Text('Select image', maxLines: 1,),
+          ],
+        ),
+      ),
+    );
+  }
+ Future<void>  _onTapPhotoPicker() async{
+    final XFile? pickedImage = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if(pickedImage != null){
+      _selectedImage = pickedImage;
+      setState(() {
+
+      });
+    }
   }
   void _onTapSubmitButton(){
     if(_formKey.currentState!.validate()){
