@@ -45,6 +45,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         .titleLarge,),
                     const SizedBox(height: 40,),
                     _buildPhotoPicker(),
+                    const SizedBox(height: 5,),
                     TextFormField(
                       controller: _firstNameTEController,
                       textInputAction: TextInputAction.next,
@@ -58,6 +59,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         return null;
                       } ,
                     ),
+                    const SizedBox(height: 5,),
                     TextFormField(
                       controller: _lasttNameTEController,
                       textInputAction: TextInputAction.next,
@@ -71,6 +73,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         return null;
                       } ,
                     ),
+                    const SizedBox(height: 5,),
                     TextFormField(
                       controller: _phoneNumberTEController,
                       textInputAction: TextInputAction.next,
@@ -85,6 +88,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         return null;
                       } ,
                     ),
+                    const SizedBox(height: 5,),
                     TextFormField(
                       controller: _emailTEController,
                       textInputAction: TextInputAction.next,
@@ -99,7 +103,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         return null;
                       } ,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(height: 5,),
                     TextFormField(
                       controller: _passwordTEController,
                       obscureText: true,
@@ -138,6 +142,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             borderRadius: BorderRadius.circular(8),
             color: Colors.white
         ),
+
         child: Row(
           children: [
             Container(
@@ -156,8 +161,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 fontWeight: FontWeight.w700,
               )),
             ),
-            const SizedBox(width: 5,),
-            Text('Select image', maxLines: 1,),
+            const SizedBox(width: 10,),
+            Text(_selectedImage == null ? 'Select image' : _selectedImage!.name,
+              maxLines: 1,
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+            ),
+            ),
           ],
         ),
       ),
