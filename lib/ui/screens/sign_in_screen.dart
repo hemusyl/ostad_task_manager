@@ -1,10 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/data/service/network_caller.dart';
 import 'package:ostad_task_manager/ui/screens/forgot_password_email_screen.dart';
 import 'package:ostad_task_manager/ui/screens/main_nav_bar_holder_screen.dart';
 import 'package:ostad_task_manager/ui/screens/sign_up_screen.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
+
+import '../../data/service/urls.dart';
+import '../widgets/centered_circular_progress_indicator.dart';
 
 
 class SignInScreen extends StatefulWidget {
@@ -19,6 +23,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _signInprogress = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +69,17 @@ class _SignInScreenState extends State<SignInScreen> {
                      } ,
                   ),
                 const SizedBox(height: 15,),
-                  ElevatedButton(
-                    onPressed:_onTapSignInButton, child: Icon(Icons.arrow_circle_right_rounded),
+                  Visibility(
+                    visible: _signInprogress == false,
+                    replacement: CenteredCircularProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed:_onTapSignInButton,
+                      child: Icon(Icons.arrow_circle_right_rounded),
+                    ),
                   ),
                 const SizedBox(height: 30,),
-                TextButton(onPressed: _onTapForgotPasswordButton, child: Text('Forgot Password?', style: TextStyle(
+                TextButton(onPressed: _onTapForgotPasswordButton,
+                    child: Text('Forgot Password?', style: TextStyle(
                   color: Colors.grey
                 ),)),
                 RichText(text: TextSpan(
@@ -101,6 +113,15 @@ class _SignInScreenState extends State<SignInScreen> {
       
     }
     Navigator.pushNamedAndRemoveUntil(context, MainNavBarHolderScreen.name, (predicate)=>false);
+  }
+
+  Future<void> _signIn() async {
+    _signInprogress = true;
+    setState(() {});
+    
+    NetworkResponse response = await NetwokCaller.postRequest(
+      url: Urls.loginUrl,
+    );
   }
 
   void _onTapForgotPasswordButton(){
