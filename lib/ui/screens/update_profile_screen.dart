@@ -25,6 +25,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _selectedImage;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
