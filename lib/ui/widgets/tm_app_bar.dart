@@ -23,7 +23,9 @@ class _TMAppBarState extends State<TMAppBar> {
         onTap: _onTapProfileBar,
         child: Row(
           children: [
-            CircleAvatar(),
+            CircleAvatar(
+
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -58,7 +60,10 @@ class _TMAppBarState extends State<TMAppBar> {
   Future<void> _onTapLogOutButton() async{
     await AuthController.clearData();
     Navigator.pushNamedAndRemoveUntil(
-        context, SignInScreen.name, (predicate) => false);
+        context,
+        SignInScreen.name,
+            (predicate) => false
+    );
   }
 
   void _onTapProfileBar() {

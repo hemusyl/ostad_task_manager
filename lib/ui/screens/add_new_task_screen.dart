@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/data/service/network_caller.dart';
+import 'package:ostad_task_manager/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
+import 'package:ostad_task_manager/ui/widgets/snack_bar_message.dart';
 import 'package:ostad_task_manager/ui/widgets/tm_app_bar.dart';
+
+import '../../data/service/urls.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
   const AddNewTaskScreen({super.key});
@@ -15,6 +20,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _titleTEController = TextEditingController();
   final TextEditingController _descriptionTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _addNewTaskInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +65,13 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   ),
                 ),
                 const SizedBox(height: 15,),
-                ElevatedButton(onPressed: _onTapSubmitButton,
-                  child: Icon(Icons.arrow_circle_right_rounded),),
+
+                Visibility(
+                  visible: _addNewTaskInProgress == false,
+                  replacement: CenteredCircularProgressIndicator(),
+                  child: ElevatedButton(onPressed: _onTapSubmitButton,
+                    child: Icon(Icons.arrow_circle_right_rounded),),
+                ),
               ],
             ),
           ),
@@ -70,10 +81,38 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   }
   void _onTapSubmitButton(){
     if(_formKey.currentState!.validate()){
-
+      _addNewTask();
     }
-    Navigator.pop(context);
+
   }
+
+Future<void> _addNewTask() async{
+
+  Map<String, String> requestBody = {
+    'title': _titleTEController.text.trim(),
+    'description' : _descriptionTEController.text.trim(),
+    'status': 'New'
+
+  };
+
+  NetworkResponse response = await NetwokCaller.postRequest(
+      url: Urls.createNewTaskUrl,
+      body: requestBody
+  );
+
+  _addNewTaskInProgress = false;
+  setState(() {});
+
+  if (response.isSuccess){
+    _titleTEController.clear();
+    _descriptionTEController.clear();
+    showSnackBarMessage(context, 'Added new task');
+  } else {
+    showSnackBarMessage(context, response.errorMessage!);
+  }
+
+}
+
 @override
  void dispose(){
     _titleTEController.dispose();
