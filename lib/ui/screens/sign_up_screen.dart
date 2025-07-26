@@ -37,7 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 80,),
-                    Text('Join With Us', style: Theme.of(context).textTheme.titleLarge,),
+                    Text('Join With Us',
+                      style: Theme.of(context).textTheme.titleLarge,),
                     const SizedBox(height: 20,),
                     TextFormField(
                       controller: _firstNameTEController,
@@ -133,7 +134,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.green,
                               fontWeight: FontWeight.w700,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = _onTapSignInButton,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = _onTapSignInButton,
                           )
                         ]
                     ))

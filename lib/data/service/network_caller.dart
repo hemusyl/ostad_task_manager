@@ -86,18 +86,18 @@ class NetwokCaller{
    }
 
   static void _logRequest (String url, Map<String, String>? body){
-    debugPrint(' ======\n'
+    debugPrint(' ======================================\n'
         'URL: $url\n'
         'BODY: $body\n'
-        '=====================');
+        '============================================');
 
   }
   static void _logResponse (String url, Response response){
-    debugPrint(' ======\n'
+    debugPrint(' ===================================\n'
         'URL: $url\n'
         'STATUS CODE: ${response.statusCode}\n'
         'BODY: ${response.body}\n'
-        '=====================');
+        '===========================================');
 
   }
 
