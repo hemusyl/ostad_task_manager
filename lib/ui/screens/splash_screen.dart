@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ostad_task_manager/ui/controllers/auth_controller.dart';
+import 'package:ostad_task_manager/ui/screens/main_nav_bar_holder_screen.dart';
 import 'package:ostad_task_manager/ui/screens/sign_in_screen.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
 import '../utils/asset_paths.dart';
@@ -15,7 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToNextScreen() async{
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, SignInScreen.name);
+    bool isLoggedIn = await AuthController.isUserLoggedIn();
+    if(isLoggedIn){
+      Navigator.pushReplacementNamed(context, MainNavBarHolderScreen.name);
+    }else{
+      Navigator.pushReplacementNamed(context, SignInScreen.name);
+    }
+
   }
 
   @override
