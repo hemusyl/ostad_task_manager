@@ -1,4 +1,5 @@
-import 'dart:ffi';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _firstNameTEController = TextEditingController();
-  final TextEditingController _lasttNameTEController = TextEditingController();
+  final TextEditingController _lastNameTEController = TextEditingController();
   final TextEditingController _phoneNumberTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -62,7 +63,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     ),
                     const SizedBox(height: 5,),
                     TextFormField(
-                      controller: _lasttNameTEController,
+                      controller: _lastNameTEController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         hintText:'Last Name',
@@ -195,7 +196,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     _emailTEController.dispose();
     _passwordTEController.dispose();
     _firstNameTEController.dispose();
-    _lasttNameTEController.dispose();
+    _lastNameTEController.dispose();
     _phoneNumberTEController.dispose();
     super.dispose();
   }

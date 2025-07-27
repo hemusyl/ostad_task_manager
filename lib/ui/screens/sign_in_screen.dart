@@ -98,7 +98,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         color: Colors.green,
                         fontWeight: FontWeight.w700,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = _onTapSignUpButton,
                     )
                   ]
                 ))
@@ -115,10 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
     if(_formKey.currentState!.validate()){
       _signIn();
     }
-    Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainNavBarHolderScreen.name,
-            (predicate)=>false);
+
   }
 
   Future<void> _signIn() async {
@@ -131,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
-      url: Urls.loginUrl, body: requestBody,
+      url: Urls.loginUrl, body: requestBody, isFromLogin: true
     );
 
     if (response.isSuccess){
