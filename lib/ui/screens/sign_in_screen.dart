@@ -130,7 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
       'password': _passwordTEController.text
     };
 
-    NetworkResponse response = await NetwokCaller.postRequest(
+    NetworkResponse response = await NetworkCaller.postRequest(
       url: Urls.loginUrl, body: requestBody,
     );
 

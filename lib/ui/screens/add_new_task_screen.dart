@@ -95,7 +95,7 @@ Future<void> _addNewTask() async{
 
   };
 
-  NetworkResponse response = await NetwokCaller.postRequest(
+  NetworkResponse response = await NetworkCaller.postRequest(
       url: Urls.createNewTaskUrl,
       body: requestBody
   );
