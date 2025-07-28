@@ -129,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
-      url: Urls.loginUrl, body: requestBody, isFromLogin: true
+      url: Urls.loginUrl, body: requestBody, isFromLogin: true,
     );
 
     if (response.isSuccess){
@@ -139,7 +139,8 @@ class _SignInScreenState extends State<SignInScreen> {
       await AuthController.saveUserData(userModel, token);
 
       Navigator.pushNamedAndRemoveUntil
-        (context,
+        (
+          context,
           MainNavBarHolderScreen.name,
           (predicate) => false,
         );

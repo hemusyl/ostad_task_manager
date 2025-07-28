@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/task_model.dart';
+
 enum TaskType {
   tNew,
   progress,
@@ -8,8 +10,9 @@ enum TaskType {
 }
 
 class TaskCard extends StatelessWidget {
-  const TaskCard({super.key, required this.taskType});
+  const TaskCard({super.key, required this.taskType, required this.taskModel});
   final TaskType  taskType;
+  final TaskModel taskModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +24,18 @@ class TaskCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('What is Lorem Ipsum?', style: Theme.of(context).textTheme.titleMedium,),
-            Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry',style: TextStyle(
+            Text(taskModel.title,
+              style: Theme.of(context).textTheme.titleMedium,),
+            Text(taskModel.description, style: TextStyle(
               color: Colors.black54,
             ),),
             const SizedBox(height: 4,),
-            Text('Date: 12/7/25'),
+            Text('Date: ${taskModel.createdDate}'),
             const SizedBox(height: 5,),
             Row(
               children: [
-                Chip(label: Text(_getTaskTypeName(), style: TextStyle(color: Colors.white),),
+                Chip(label: Text(_getTaskTypeName(),
+                  style: TextStyle(color: Colors.white),),
                   backgroundColor: _getTaskChipColor(),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -70,5 +75,7 @@ class TaskCard extends StatelessWidget {
         return 'Cancelled';
     }
   }
+
+
 }
 
