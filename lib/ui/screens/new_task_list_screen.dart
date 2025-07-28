@@ -24,7 +24,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-   //   _getNewTaskList();
+     _getNewTaskList();
      // _getTaskStatusCountList();
     });
   }
@@ -72,7 +72,7 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     );
   }
 
-  Future<void> _getNewTasklist() async {
+  Future<void> _getNewTaskList() async {
     _getNewTasksInProgress = true;
     setState(() {});
 
