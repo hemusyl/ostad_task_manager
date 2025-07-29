@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../data/service/network_caller.dart';
 import '../../data/models/task_model.dart';
-import '../../data/service/urls.dart';
-import '../widgets/snack_bar_message.dart';
-import '../widgets/taskcard.dart';
+
+
 
 enum TaskType {
   tNew,
