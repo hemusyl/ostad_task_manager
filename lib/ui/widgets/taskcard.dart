@@ -10,9 +10,10 @@ enum TaskType {
 }
 
 class TaskCard extends StatelessWidget {
-  const TaskCard({super.key, required this.taskType, required this.taskModel});
+  const TaskCard({super.key, required this.taskType, required this.taskModel, required this.onStatusUpdate,});
   final TaskType  taskType;
   final TaskModel taskModel;
+  final VoidCallback onStatusUpdate;
 
   @override
   Widget build(BuildContext context) {

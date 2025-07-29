@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/widgets/centered_circular_progress_indicator.dart';
 
+import '../../data/models/task_model.dart';
+import '../../data/service/network_caller.dart';
+import '../../data/service/urls.dart';
+import '../widgets/snack_bar_message.dart';
 import '../widgets/taskcard.dart';
 
 class ProgressTaskListScreen extends StatefulWidget {
@@ -10,18 +15,62 @@ class ProgressTaskListScreen extends StatefulWidget {
 }
 
 class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
+
+  bool _getProgressTasksInProgress = false;
+  List<TaskModel> _progressTaskList = [];
+  // List<TaskStatusCountModel> _taskStatusCountList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProgressTaskList();
+      // _getTaskStatusCountList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: ListView.builder(
-        itemCount: 9,
-        itemBuilder: (context, index){
-         // return TaskCard(
-         //     taskType: TaskType.progress,
-         // );
-        },
+      child: Visibility(
+        visible: _getProgressTasksInProgress == false,
+        replacement: CenteredCircularProgressIndicator(),
+        child: ListView.builder(
+          itemCount: _progressTaskList.length,
+          itemBuilder: (context, index){
+            return TaskCard(
+               taskType: TaskType.progress,
+              taskModel: _progressTaskList[index],
+              onStatusUpdate: () {
+                 _getProgressTaskList(); },
+           );
+          },
+        ),
       ),
     );
+  }
+  Future<void> _getProgressTaskList() async {
+    _getProgressTasksInProgress = true;
+    setState(() {});
+
+    NetworkResponse response =await NetworkCaller.getRequest(
+        url: Urls.getProgressTasksUrl,
+    );
+
+    //Models
+    if (response.isSuccess){
+      // List<TaskStatusCountModel> list = [];
+      List<TaskModel> list = [];
+      for (Map<String, dynamic> jsonData in response.body!['data']) {
+        list.add(TaskModel.fromJson(jsonData));
+      }
+      _progressTaskList  = list;
+
+    }else{
+      showSnackBarMessage(context, response.errorMessage!);
+    }
+    _getProgressTasksInProgress = false;
+    setState(() {});
   }
 }
