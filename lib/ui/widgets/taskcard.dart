@@ -171,6 +171,14 @@ class _TaskCardState extends State<TaskCard> {
     return widget.taskType == type ? Icon(Icons.check) : null;
   }
 
+  // TODO: Complete this
+  // void _onTapTaskStatus(TaskType type) {
+  //   if (type == widget.taskType) {
+  //     return;
+  //   }
+  //
+  // }
+
   //Api call
   Future<void> _updateTaskStatus(String status) async {
     Navigator.pop(context);

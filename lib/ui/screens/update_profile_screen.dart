@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
 import 'package:ostad_task_manager/ui/widgets/tm_app_bar.dart';
+
+import '../controllers/auth_controller.dart';
 
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -20,11 +18,20 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _firstNameTEController = TextEditingController();
   final TextEditingController _lastNameTEController = TextEditingController();
-  final TextEditingController _phoneNumberTEController = TextEditingController();
+  final TextEditingController _phoneTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailTEController.text = AuthController.userModel?.email ?? '';
+    _firstNameTEController.text = AuthController.userModel?.firstName ?? '';
+    _lastNameTEController.text = AuthController.userModel?.lastName ?? '';
+    _phoneTEController.text = AuthController.userModel?.mobile ?? '';
+  }
 
 
   @override
@@ -77,7 +84,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     ),
                     const SizedBox(height: 5,),
                     TextFormField(
-                      controller: _phoneNumberTEController,
+                      controller: _phoneTEController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
@@ -94,16 +101,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     TextFormField(
                       controller: _emailTEController,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        hintText:'Email',
-                      ),
-                      validator:(String? value){
-                        String email = value ?? '';
-                        if(EmailValidator.validate(email) == false){
-                          return 'Enter a valid email';
-                        }
-                        return null;
-                      } ,
+                      enabled: false,
+
                     ),
                     const SizedBox(height: 5,),
                     TextFormField(
@@ -113,9 +112,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         hintText:'Password' ,
                       ),
                       validator:(String? value){
-                        if((value?.length ?? 0) <= 6){
-                          return 'Enter a valid Password';
+                        int length = value?.length ?? 0;
+
+                        if (length > 0 && length <= 8) {
+                          return 'Enter a password more than 8 letters';
                         }
+
                         return null;
                       } ,
                     ),
@@ -197,7 +199,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     _passwordTEController.dispose();
     _firstNameTEController.dispose();
     _lastNameTEController.dispose();
-    _phoneNumberTEController.dispose();
+    _phoneTEController.dispose();
     super.dispose();
   }
 
