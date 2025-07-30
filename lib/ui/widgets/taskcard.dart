@@ -3,6 +3,7 @@ import 'package:ostad_task_manager/ui/widgets/snack_bar_message.dart';
 import '../../data/models/task_model.dart';
 import '../../data/service/network_caller.dart';
 import '../../data/service/urls.dart';
+import 'centered_circular_progress_indicator.dart';
 
 
 
@@ -67,9 +68,15 @@ class _TaskCardState extends State<TaskCard> {
                   ),),
                 Spacer(),
                 IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
-                IconButton(onPressed: () {
-                  _showEditTaskStatusDialog();
-                }, icon: Icon(Icons.edit)),
+
+                Visibility(
+                  visible: _updateTaskStatusInProgress == false,
+                  replacement: CenteredCircularProgressIndicator(),
+                  child: IconButton(onPressed: () {
+                    _showEditTaskStatusDialog();
+                  },
+                      icon: Icon(Icons.edit)),
+                ),
               ],
             ),
           ],
