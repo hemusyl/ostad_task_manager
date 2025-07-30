@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_task_manager/ui/widgets/snack_bar_message.dart';
 import '../../data/models/task_model.dart';
+import '../../data/service/network_caller.dart';
+import '../../data/service/urls.dart';
 
 
 
@@ -64,7 +67,9 @@ class _TaskCardState extends State<TaskCard> {
                   ),),
                 Spacer(),
                 IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                IconButton(onPressed: () {
+                  _showEditTaskStatusDialog();
+                }, icon: Icon(Icons.edit)),
               ],
             ),
           ],
@@ -99,8 +104,90 @@ class _TaskCardState extends State<TaskCard> {
     }
   }
 
+  void _showEditTaskStatusDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text('Change Status'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('New'),
+                trailing: _getTaskStatusTrailing(TaskType.tNew),
+                onTap: () {
+                  if (widget.taskType == TaskType.tNew) {
+                    return;
+                  }
+                  _updateTaskStatus('New');
+                },
+              ),
+              ListTile(
+                title: Text('In Progress'),
+                trailing: _getTaskStatusTrailing(TaskType.progress),
+                onTap: () {
+                  if (widget.taskType == TaskType.progress) {
+                    return;
+                  }
+                  _updateTaskStatus('Progress');
+                },
+              ),
+              ListTile(
+                title: Text('Completed'),
+                trailing: _getTaskStatusTrailing(TaskType.completed),
+                onTap: () {
+                  if (widget.taskType == TaskType.completed) {
+                    return;
+                  }
+                  _updateTaskStatus('Completed');
+                },
+              ),
+              ListTile(
+                title: Text('Cancelled'),
+                trailing: _getTaskStatusTrailing(TaskType.cancelled),
+                onTap: () {
+                  if (widget.taskType == TaskType.cancelled) {
+                    return;
+                  }
+                  _updateTaskStatus('Cancelled');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
+  Widget? _getTaskStatusTrailing(TaskType type) {
+    return widget.taskType == type ? Icon(Icons.check) : null;
+  }
+
+  //Api call
+  Future<void> _updateTaskStatus(String status) async {
+    Navigator.pop(context);
+    _updateTaskStatusInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+
+    NetworkResponse response = await NetworkCaller.getRequest(
+      url: Urls.updateTaskStatusUrl(widget.taskModel.id, status),
+    );
+
+    _updateTaskStatusInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+
+    if (response.isSuccess) {
+      widget.onStatusUpdate();
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, response.errorMessage!);
+      }
+    }
+  }
 }
-
-
 
