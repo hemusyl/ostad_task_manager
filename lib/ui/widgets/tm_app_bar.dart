@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ostad_task_manager/ui/controllers/auth_controller.dart';
 import 'package:ostad_task_manager/ui/screens/update_profile_screen.dart';
@@ -24,7 +26,13 @@ class _TMAppBarState extends State<TMAppBar> {
         child: Row(
           children: [
             CircleAvatar(
+            backgroundImage:
+            AuthController.userModel?.photo == null
+                ? null
+                : MemoryImage(
+              base64Decode(AuthController.userModel!.photo!),
             ),
+          ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(

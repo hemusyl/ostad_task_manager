@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ostad_task_manager/data/service/network_caller.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
 import 'package:ostad_task_manager/ui/widgets/tm_app_bar.dart';
 
+import '../../data/service/urls.dart';
 import '../controllers/auth_controller.dart';
 
 
@@ -23,6 +27,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _selectedImage;
+  bool _updateProfileInProgress = false;
 
   @override
   void initState() {
@@ -192,6 +197,41 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
   }
 
+  Future<void> _updateProfile() async {
+    _updateProfileInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+
+    Uint8List? imageBytes;
+
+    Map<String, String> requestBody = {
+      "email": _emailTEController.text,
+      "firstName": _firstNameTEController.text.trim(),
+      "lastName": _lastNameTEController.text.trim(),
+      "mobile": _phoneTEController.text.trim(),
+    };
+
+    if (_passwordTEController.text.isNotEmpty) {
+      requestBody['password'] = _passwordTEController.text;
+    }
+
+    if (_selectedImage != null) {
+      imageBytes = await _selectedImage!.readAsBytes();
+      requestBody['photo'] = base64Encode(imageBytes);
+    }
+
+    NetworkResponse response = await NetworkCaller.postRequest(
+      url: Urls.UpdateProfileUrl,
+      body: requestBody,
+    );
+
+    _updateProfileInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+
+  }
 
   @override
   void dispose(){
