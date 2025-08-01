@@ -27,9 +27,7 @@ class _TMAppBarState extends State<TMAppBar> {
           children: [
             CircleAvatar(
             backgroundImage:
-            AuthController.userModel?.photo == null
-                ? null
-                : MemoryImage(
+            AuthController.userModel?.photo == null ? null : MemoryImage(
               base64Decode(AuthController.userModel!.photo!),
             ),
           ),

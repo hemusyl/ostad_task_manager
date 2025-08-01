@@ -6,8 +6,10 @@ import 'package:ostad_task_manager/data/service/network_caller.dart';
 import 'package:ostad_task_manager/ui/widgets/screen_background.dart';
 import 'package:ostad_task_manager/ui/widgets/tm_app_bar.dart';
 
+import '../../data/models/user_model.dart';
 import '../../data/service/urls.dart';
 import '../controllers/auth_controller.dart';
+import '../widgets/snack_bar_message.dart';
 
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -229,6 +231,30 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     _updateProfileInProgress = false;
     if (mounted) {
       setState(() {});
+    }
+
+    if (response.isSuccess) {
+      UserModel userModel = UserModel(
+          id: AuthController.userModel!.id,
+          email: _emailTEController.text,
+          firstName: _firstNameTEController.text.trim(),
+          lastName: _lastNameTEController.text.trim(),
+          mobile: _phoneTEController.text.trim(),
+          photo: imageBytes == null
+              ? AuthController.userModel?.photo
+              : base64Encode(imageBytes)
+      );
+
+      await AuthController.updateUserData(userModel);
+
+      _passwordTEController.clear();
+      if (mounted) {
+        showSnackBarMessage(context, 'Profile updated');
+      }
+    } else {
+      if (mounted) {
+        showSnackBarMessage(context, response.errorMessage!);
+      }
     }
 
   }
