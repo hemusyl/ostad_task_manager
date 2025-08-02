@@ -24,7 +24,7 @@ class _CompletedTaskListScreenState extends State<CompletedTaskListScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getCompletedTaskList();
-      // _getTaskStatusCountList();
+
     });
   }
 
@@ -33,8 +33,8 @@ class _CompletedTaskListScreenState extends State<CompletedTaskListScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Visibility(
-        replacement: CircularProgressIndicator(),
         visible: _getCompletedTasks == false,
+        replacement: CircularProgressIndicator(),
         child: ListView.builder(
           itemCount: _completedTaskList.length,
           itemBuilder: (context, index){
