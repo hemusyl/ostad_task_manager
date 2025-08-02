@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ostad_task_manager/data/service/network_caller.dart';
 import 'package:ostad_task_manager/ui/screens/add_new_task_screen.dart';
 import 'package:ostad_task_manager/ui/widgets/centered_circular_progress_indicator.dart';
@@ -137,6 +139,8 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   }
 
   void _onTapAddNewTaskButton() {
-    Navigator.pushNamed(context, AddNewTaskScreen.name);
+     //Navigator.pushNamed(context, AddNewTaskScreen.name);
+     //Get.to(() =>AddNewTaskScreen());
+    Get.toNamed(AddNewTaskScreen.name);
   }
 }

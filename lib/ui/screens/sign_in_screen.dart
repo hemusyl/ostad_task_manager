@@ -147,8 +147,10 @@ class _SignInScreenState extends State<SignInScreen> {
          // (predicate) => false,
        // );
 
-      Get.to(() => const MainNavBarHolderScreen());
-      Get.toNamed(MainNavBarHolderScreen.name);
+      // Getx
+    //  Get.to(() => const MainNavBarHolderScreen());
+     // Get.toNamed(MainNavBarHolderScreen.name);
+      Get.offAllNamed(MainNavBarHolderScreen.name);
     } else {
       _signInprogress = false;
       setState(() {});
