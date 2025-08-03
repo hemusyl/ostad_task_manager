@@ -10,7 +10,8 @@ class CancelledTaskListScreen extends StatefulWidget {
   const CancelledTaskListScreen({super.key});
 
   @override
-  State<CancelledTaskListScreen> createState() => _CancelledTaskListScreenState();
+  State<CancelledTaskListScreen> createState() =>
+      _CancelledTaskListScreenState();
 }
 
 class _CancelledTaskListScreenState extends State<CancelledTaskListScreen> {
@@ -32,19 +33,18 @@ class _CancelledTaskListScreenState extends State<CancelledTaskListScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Visibility(
-        visible: _getCancelledTasks,
+        visible: _getCancelledTasks == false,
         replacement: CircularProgressIndicator(),
         child: ListView.builder(
           itemCount: _cancelledTaskList.length,
           itemBuilder: (context, index){
-          return TaskCard(
-            taskType: TaskType.cancelled,
-            taskModel: _cancelledTaskList[index],
-            onStatusUpdate: () {
-              _getCancelledTaskList();
-            },
-
-          );
+            return TaskCard(
+              taskType: TaskType.cancelled,
+              taskModel: _cancelledTaskList[index],
+              onStatusUpdate: () {
+                _getCancelledTaskList();
+              },
+            );
           },
         ),
       ),
