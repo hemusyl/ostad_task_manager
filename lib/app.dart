@@ -10,6 +10,8 @@ import 'package:ostad_task_manager/ui/screens/sign_up_screen.dart';
 import 'package:ostad_task_manager/ui/screens/splash_screen.dart';
 import 'package:ostad_task_manager/ui/screens/update_profile_screen.dart';
 
+import 'controller_binder.dart';
+
 class TaskManagerApp extends StatelessWidget{
   const TaskManagerApp({super.key});
   static  GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
@@ -78,6 +80,7 @@ class TaskManagerApp extends StatelessWidget{
         AddNewTaskScreen.name : (context) => AddNewTaskScreen(),
         UpdateProfileScreen.name : (context) => UpdateProfileScreen(),
       },
+      initialBinding: ControllerBinder(),
     );
   }
 }
