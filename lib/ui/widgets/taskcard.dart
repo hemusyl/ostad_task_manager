@@ -67,7 +67,8 @@ class _TaskCardState extends State<TaskCard> {
                     side: BorderSide.none,
                   ),),
                 Spacer(),
-                IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                IconButton(onPressed: _deleteTask,
+                    icon: Icon(Icons.delete)),
 
                 Visibility(
                   visible: _updateTaskStatusInProgress == false,
@@ -202,6 +203,21 @@ class _TaskCardState extends State<TaskCard> {
       if (mounted) {
         showSnackBarMessage(context, response.errorMessage!);
       }
+    }
+  }
+
+  Future<void> _deleteTask() async {
+    _updateTaskStatusInProgress = true;
+    setState(() {});
+    final NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.deleteTaskUrl(widget.taskModel.id));
+
+    _updateTaskStatusInProgress = false;
+    if (response.isSuccess) {
+      widget.onStatusUpdate();
+    } else {
+      setState(() {});
+      showSnackBarMessage(context, response.errorMessage!,);
     }
   }
 }
