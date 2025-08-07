@@ -21,11 +21,13 @@ class TaskCard extends StatefulWidget {
     required this.taskType,
     required this.taskModel,
     required this.onStatusUpdate,
+   // required this.onDelete, // Add this callback
   });
 
   final TaskType  taskType;
   final TaskModel taskModel;
   final VoidCallback onStatusUpdate;
+  //final Function(String) onDelete; // Callback for delete action
 
   @override
   State<TaskCard> createState() => _TaskCardState();
@@ -33,6 +35,7 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool _updateTaskStatusInProgress = false;
+  bool _deleteTaskInProgress = false; // Track delete operation progress
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +76,12 @@ class _TaskCardState extends State<TaskCard> {
                 Visibility(
                   visible: _updateTaskStatusInProgress == false,
                   replacement: CenteredCircularProgressIndicator(),
-                  child: IconButton(onPressed: () {
+                  child: IconButton(
+                      onPressed: () {
                     _showEditTaskStatusDialog();
                   },
-                      icon: Icon(Icons.edit)),
+                      icon: Icon(Icons.edit)
+                  ),
                 ),
               ],
             ),
@@ -206,6 +211,9 @@ class _TaskCardState extends State<TaskCard> {
     }
   }
 
+
+
+
   Future<void> _deleteTask() async {
     _updateTaskStatusInProgress = true;
     setState(() {});
@@ -219,5 +227,9 @@ class _TaskCardState extends State<TaskCard> {
       setState(() {});
       showSnackBarMessage(context, response.errorMessage!,);
     }
+
+
   }
+
+
 }
