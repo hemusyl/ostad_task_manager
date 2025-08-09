@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late GoogleMapController _mapController;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +102,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
           ),
         },
+      ),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   _mapController.moveCamera(CameraUpdate.newCameraPosition(
+      //     CameraPosition(target: LatLng(24.90117931511339, 91.85299689857932),
+      //     zoom: 15,
+      //     )
+      //   ),
+      //   );
+      // }),
+
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(onPressed: (){
+            _mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                  CameraPosition(target: LatLng(24.90117931511339, 91.85299689857932),
+                    zoom: 15,
+                  )
+              ),
+            );
+          },
+            child: Icon(Icons.my_location),
+          ),
+        ]
       ),
     );
   }
